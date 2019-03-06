@@ -1,0 +1,80 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+ .modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1071;
+    background-color: #000;
+    display:none;
+}
+      
+ .modal-backdrop.show {
+    opacity: .5;
+    display: block;
+}
+
+.modal-backdrop.fade {
+    opacity: 0;
+    display:none;
+}
+
+div.modal{
+    z-index: 9991040;
+    
+}
+div.modal-dialog{
+    pointer-events: inherit;
+    max-width: 850px;
+}
+a.list-group-item, div.modal-content {
+    border-radius: 0px !important;
+}
+.modal-close{
+    z-index: 9999999999;
+}
+figure:hover, figure.fon{
+    background-color:aliceblue;
+}
+.customize_button{
+    margin:3px auto;
+    display:block;
+}
+.card .card-body{
+    padding:0.5em;
+}
+.card .card-header h5, .card .card-header{
+padding:0px;
+margin:0px;
+}
+.card .card-header h5 button{
+    width: 100%;
+    text-align: left;
+    text-decoration: none;
+    color: black;
+    font-size:0.7em;
+    text-transform: uppercase;
+    background-color: #f4f4f4;
+}
+.card-body .card .card-header h5 button{
+    text-transform: none;
+}
+.card-body p{
+    font-size: 0.75em;
+}
+.card h5{
+    font-size:1.5em;
+}
+div.modal{
+    overflow:scroll;
+}
+#parentCard{
+    margin: 1em;
+}
+.modal-body .btn-sm{
+    font-size: 1em;
+}
