@@ -195,7 +195,7 @@ class Bespoke_Customizer_Public {
 
 	public function hook_modal_display(){
 		
-		echo '<div class="modal-backdrop"></div>';
+		echo '<div class="modal-backdrop" id="backdrop"></div>';
 	}
 
 	public function custom_add_item_data($cart_item_data, $product_id)
@@ -209,19 +209,40 @@ class Bespoke_Customizer_Public {
 
 	public function custom_add_item_meta($item_data, $cart_item)
 	{
-
-		if(array_key_exists('bespoke_customization', $cart_item))
+		//var_dump($cart_item);exit();
+		if(array_key_exists('customization', $cart_item))
 		{
-			$custom_details = $cart_item['bespoke_customization'];
-
-			$custom_details = $custom_details? $custom_details : "None";
+			$custom_details = json_decode(stripslashes($cart_item['customization']));
+			//$custom_details = $cart_item['bespoke_customization'];
+			$details = "";
+			foreach($custom_details as $key=>$value){
+				$details = $details."<p>".$key ." : ".$value."</p> ";
+			 }
+			$details = $details? $details : "No Customization";
 			$item_data[] = array(
 				'key'   => 'Customization',
-				'value' => $custom_details
+				'value' => $details
 			);
 		}
 
 		return $item_data;
 	}
+
+	public function custom_add_custom_order_line_item_meta($item, $cart_item_key, $values, $order)
+	{
+		if(array_key_exists('customization', $values))
+		{
+			$custom_details = json_decode(stripslashes($values['customization']));
+				//$custom_details = $cart_item['bespoke_customization'];
+				$details = "";
+				foreach($custom_details as $key=>$value){
+					$details = $details."<p>".$key ." : ".$value."</p> ";
+				}
+				$details = $details? $details : "No Customization";
+			$item->add_meta_data('_customization',$details);
+		}
+	}
+
+
 
 }

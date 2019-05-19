@@ -175,9 +175,12 @@ class Bespoke_Customizer {
 		$this->loader->add_action( 'init', $plugin_public, "process_request");
 		$this->loader->add_action( 'woocommerce_after_add_to_cart_button', $plugin_public, "show_customizer_button");
 		$this->loader->add_action('wp_footer', $plugin_public, "hook_modal_display");
-		$this->loader->add_filter('woocommerce_add_cart_item_data', $plugin_public, "custom_add_item_data", 10, 2);
-		$this->loader->add_action('wp_ajax_woocommerce_ajax_add_to_cart', $plugin_public, 'woocommerce_ajax_add_to_cart');
-		$this->loader->add_action('wp', $plugin_public, 'woocommerce_ajax_add_to_cart');
+		$this->loader->add_filter('woocommerce_add_cart_item_data', $plugin_public, "custom_add_item_data", 10, 3);
+		$this->loader->add_filter('woocommerce_get_item_data',$plugin_public, 'custom_add_item_meta',10,2);
+		$this->loader->add_action( 'woocommerce_checkout_create_order_line_item', 'custom_add_custom_order_line_item_meta',10,4 );
+		//$this->loader->add_filter( 'woocommerce_add_to_cart_redirect', $plugin_public, 'custom_add_to_cart_redirect' );
+		//$this->loader->add_action('wp_ajax_woocommerce_ajax_add_to_cart', $plugin_public, 'woocommerce_ajax_add_to_cart');
+		
 
 	}
 

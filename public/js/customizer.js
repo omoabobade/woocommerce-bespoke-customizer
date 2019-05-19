@@ -52,29 +52,17 @@ var Customizer = function (_React$Component) {
             return function (e) {
                 var data = _this.state.data;
                 data[[_this.state.category.title]] = title;
-                _this.setState({ data: data });
+                _this.setState({ data: data, parsedData: JSON.stringify(data) });
             };
         };
 
         _this.saveCustomizer = function (e) {
-            var bespoke_customization = _this.state.data;
-            //cost prodId = 
-            console.log(e);
-            var data = { bespoke_customization: bespoke_customization };
-            var url = _this.activeDomain + "?api_request=saveCustomData";
-            fetch(url, {
-                method: 'POST', // or 'PUT'
-                body: JSON.stringify(data), // data can be `string` or {object}!
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(function (res) {
-                return res.json();
-            }).then(function (response) {
-                console.log('Success:', JSON.stringify(response));
-            }).catch(function (error) {
-                return console.error('Error:', error);
-            });
+            document.getElementById("exampleModalLong").classList.remove('show');
+            document.getElementById("backdrop").classList.remove('show');
+            document.getElementById("backdrop").style.removeProperty('display');
+            e.target.form.submit();
+            //const bespoke_customization = this.state.data;
+
         };
 
         _this.state = { items: [], categories: [], category: {}, labels: [], data: {} };
@@ -83,6 +71,9 @@ var Customizer = function (_React$Component) {
         _this.fetchItems();
         return _this;
     }
+
+    //activeDomain = "http://localhost/wordpress/";
+
 
     _createClass(Customizer, [{
         key: "componentDidMount",
@@ -137,7 +128,6 @@ var Customizer = function (_React$Component) {
         value: function parseLabels(id) {
             var _this4 = this;
 
-            debugger;
             if (this.state.labels.length == 0) return;
             var figures = this.state.labels.map(function (label) {
                 return label.category_id == id ? _this4.parseFigures(label) : "";
@@ -185,7 +175,7 @@ var Customizer = function (_React$Component) {
 
             return React.createElement(
                 "div",
-                { id: "exampleModalLong", className: "modal", tabIndex: "-1", role: "dialog", "aria-labelledby": "exampleModalLongTitle", style: { paddingLeft: "0px" } },
+                { id: "exampleModalLong", className: "modal", tabIndex: "-1", role: "dialog", "aria-labelledby": "exampleModalLongTitle", style: { paddingLeft: "0px;" } },
                 React.createElement(
                     "div",
                     { className: "modal-dialog", role: "document" },
@@ -233,6 +223,7 @@ var Customizer = function (_React$Component) {
                                 { type: "button", className: "btn btn-secondary save-btn btn-sm btn-block", "data-id": "", onClick: this.saveCustomizer },
                                 "Save Customization"
                             ),
+                            React.createElement("input", { type: "hidden", name: "bespoke_customization", value: this.state.parsedData }),
                             React.createElement(
                                 "div",
                                 { className: "row" },
@@ -269,7 +260,7 @@ var Customizer = function (_React$Component) {
                                 "button",
                                 { type: "button", className: "btn btn-secondary save-btn btn-sm btn-block", "data-id": "", onClick: this.saveCustomizer },
                                 "Save Customization"
-                            ),
+                            )
                         )
                     )
                 )
