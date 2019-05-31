@@ -72,47 +72,65 @@ var Customizer = function (_React$Component) {
         return _this;
     }
 
-    //activeDomain = "http://localhost/wordpress/";
+    //activeDomain = "http://localhost:8080/wordpress/";
 
 
     _createClass(Customizer, [{
-        key: "componentDidMount",
+        key: 'componentDidMount',
         value: function componentDidMount() {}
     }, {
-        key: "fetchItems",
+        key: 'fetchItems',
         value: function fetchItems() {
             var _this2 = this;
 
-            fetch(this.activeDomain + "?api_request=fetchItems", { method: 'get' }).then(function (response) {
+            var prodId = this.getCookie('customize_product_id');
+            fetch(this.activeDomain + "?api_request=fetchItems&prodId=" + prodId, { method: 'get' }).then(function (response) {
                 return response.json();
             }).then(function (items) {
                 _this2.setState({ items: items });
             });
         }
     }, {
-        key: "parseCategories",
+        key: 'getCookie',
+        value: function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+    }, {
+        key: 'parseCategories',
         value: function parseCategories(id) {
             var _this3 = this;
 
             return this.state.categories.map(function (category) {
                 return id == category.item_id ? React.createElement(
-                    "div",
-                    { className: "collapse show", "aria-labelledby": "headingOne", "data-parent": "#accordionExample" },
+                    'div',
+                    { className: 'collapse show', 'aria-labelledby': 'headingOne', 'data-parent': '#accordionExample' },
                     React.createElement(
-                        "div",
-                        { className: "card-body" },
+                        'div',
+                        { className: 'card-body' },
                         React.createElement(
-                            "div",
-                            { className: "card", key: category.id.toString() },
+                            'div',
+                            { className: 'card', key: category.id.toString() },
                             React.createElement(
-                                "div",
-                                { className: "card-header", id: "headingOne" },
+                                'div',
+                                { className: 'card-header', id: 'headingOne' },
                                 React.createElement(
-                                    "h5",
-                                    { className: "mb-0" },
+                                    'h5',
+                                    { className: 'mb-0' },
                                     React.createElement(
-                                        "button",
-                                        { className: "btn btn-link", onClick: _this3.fetchLabels(category.id), type: "button", "aria-expanded": "true", "aria-controls": "collapseOne" },
+                                        'button',
+                                        { className: 'btn btn-link', onClick: _this3.fetchLabels(category.id), type: 'button', 'aria-expanded': 'true', 'aria-controls': 'collapseOne' },
                                         category.title
                                     )
                                 )
@@ -124,7 +142,7 @@ var Customizer = function (_React$Component) {
             });
         }
     }, {
-        key: "parseLabels",
+        key: 'parseLabels',
         value: function parseLabels(id) {
             var _this4 = this;
 
@@ -134,18 +152,18 @@ var Customizer = function (_React$Component) {
             });
             if (!figures['0']) return;
             return React.createElement(
-                "div",
-                { className: "collapse show", "aria-labelledby": "headingOne" },
+                'div',
+                { className: 'collapse show', 'aria-labelledby': 'headingOne' },
                 React.createElement(
-                    "div",
-                    { className: "card-body" },
+                    'div',
+                    { className: 'card-body' },
                     React.createElement(
-                        "p",
+                        'p',
                         null,
                         this.state.category.details
                     ),
                     React.createElement(
-                        "div",
+                        'div',
                         null,
                         figures
                     )
@@ -153,99 +171,99 @@ var Customizer = function (_React$Component) {
             );
         }
     }, {
-        key: "parseFigures",
+        key: 'parseFigures',
         value: function parseFigures(label) {
             var selected = _typeof(this.state.data[[this.state.category.title]]) !== undefined && this.state.data[[this.state.category.title]] == label.title ? true : false;
             return React.createElement(
-                "figure",
+                'figure',
                 { className: selected ? "figure fon" : "figure ", style: { width: "22%", padding: "2%" }, onClick: this.setSelected(label.title) },
-                React.createElement("img", { src: label.picture, className: "figure-img img-fluid rounded", alt: label.title }),
+                React.createElement('img', { src: label.picture, className: 'figure-img img-fluid rounded', alt: label.title }),
                 React.createElement(
-                    "figcaption",
-                    { className: "figure-caption" },
+                    'figcaption',
+                    { className: 'figure-caption' },
                     label.title,
-                    selected ? React.createElement("span", { className: "oi oi-check", style: { float: "right" }, title: "icon check", "aria-hidden": "true" }) : ""
+                    selected ? React.createElement('span', { className: 'oi oi-check', style: { float: "right" }, title: 'icon check', 'aria-hidden': 'true' }) : ""
                 )
             );
         }
     }, {
-        key: "render",
+        key: 'render',
         value: function render() {
             var _this5 = this;
 
             return React.createElement(
-                "div",
-                { id: "exampleModalLong", className: "modal", tabIndex: "-1", role: "dialog", "aria-labelledby": "exampleModalLongTitle", style: { paddingLeft: "0px;" } },
+                'div',
+                { id: 'exampleModalLong', className: 'modal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'exampleModalLongTitle', style: { paddingLeft: "0px" } },
                 React.createElement(
-                    "div",
-                    { className: "modal-dialog", role: "document" },
+                    'div',
+                    { className: 'modal-dialog', role: 'document' },
                     React.createElement(
-                        "div",
-                        { className: "modal-content" },
+                        'div',
+                        { className: 'modal-content' },
                         React.createElement(
-                            "div",
-                            { className: "modal-header" },
+                            'div',
+                            { className: 'modal-header' },
                             React.createElement(
-                                "h5",
-                                { className: "modal-title" },
-                                " Your Customization : ",
-                                React.createElement("span", { id: "bespoke_product_title" })
+                                'h5',
+                                { className: 'modal-title' },
+                                ' Your Customization : ',
+                                React.createElement('span', { id: 'bespoke_product_title' })
                             ),
                             React.createElement(
-                                "div",
-                                { className: "row" },
+                                'div',
+                                { className: 'row' },
                                 React.createElement(
-                                    "div",
-                                    { className: "col-3" },
-                                    React.createElement("img", { id: "bespoke_img_src", src: "", width: "50px", style: { float: "left" } })
+                                    'div',
+                                    { className: 'col-3' },
+                                    React.createElement('img', { id: 'bespoke_img_src', src: '', width: '50px', style: { float: "left" } })
                                 ),
                                 React.createElement(
-                                    "div",
-                                    { className: "col-8" },
-                                    React.createElement("h6", { id: "bespoke_product_price" })
+                                    'div',
+                                    { className: 'col-8' },
+                                    React.createElement('h6', { id: 'bespoke_product_price' })
                                 )
                             ),
                             React.createElement(
-                                "button",
-                                { type: "button", className: "close modal-close", "aria-label": "Close" },
+                                'button',
+                                { type: 'button', className: 'close modal-close', 'aria-label': 'Close' },
                                 React.createElement(
-                                    "span",
-                                    { "aria-hidden": "true" },
-                                    "\xD7"
+                                    'span',
+                                    { 'aria-hidden': 'true' },
+                                    '\xD7'
                                 )
                             )
                         ),
                         React.createElement(
-                            "div",
-                            { className: "modal-body" },
+                            'div',
+                            { className: 'modal-body' },
                             React.createElement(
-                                "button",
-                                { type: "button", className: "btn btn-secondary save-btn btn-sm btn-block", "data-id": "", onClick: this.saveCustomizer },
-                                "Save Customization"
+                                'button',
+                                { type: 'button', className: 'btn btn-secondary save-btn btn-sm btn-block', 'data-id': '', onClick: this.saveCustomizer },
+                                'Save Customization'
                             ),
-                            React.createElement("input", { type: "hidden", name: "bespoke_customization", value: this.state.parsedData }),
+                            React.createElement('input', { type: 'hidden', name: 'bespoke_customization', value: this.state.parsedData }),
                             React.createElement(
-                                "div",
-                                { className: "row" },
+                                'div',
+                                { className: 'row' },
                                 React.createElement(
-                                    "div",
-                                    { className: "col-12" },
+                                    'div',
+                                    { className: 'col-12' },
                                     React.createElement(
-                                        "div",
-                                        { className: "accordion" },
+                                        'div',
+                                        { className: 'accordion' },
                                         this.state.items.map(function (item) {
                                             return React.createElement(
-                                                "div",
-                                                { className: "card", id: "parentCard", key: item.id.toString(), onClick: _this5.fetchCategories(item.id) },
+                                                'div',
+                                                { className: 'card', id: 'parentCard', key: item.id.toString(), onClick: _this5.fetchCategories(item.id) },
                                                 React.createElement(
-                                                    "div",
-                                                    { className: "card-header" },
+                                                    'div',
+                                                    { className: 'card-header' },
                                                     React.createElement(
-                                                        "h5",
-                                                        { className: "mb-0" },
+                                                        'h5',
+                                                        { className: 'mb-0' },
                                                         React.createElement(
-                                                            "button",
-                                                            { className: "btn btn-link", type: "button", "aria-expanded": "true", "aria-controls": "collapseOne" },
+                                                            'button',
+                                                            { className: 'btn btn-link', type: 'button', 'aria-expanded': 'true', 'aria-controls': 'collapseOne' },
                                                             item.title
                                                         )
                                                     )
@@ -257,9 +275,9 @@ var Customizer = function (_React$Component) {
                                 )
                             ),
                             React.createElement(
-                                "button",
-                                { type: "button", className: "btn btn-secondary save-btn btn-sm btn-block", "data-id": "", onClick: this.saveCustomizer },
-                                "Save Customization"
+                                'button',
+                                { type: 'button', className: 'btn btn-secondary save-btn btn-sm btn-block', 'data-id': '', onClick: this.saveCustomizer },
+                                'Save Customization'
                             )
                         )
                     )

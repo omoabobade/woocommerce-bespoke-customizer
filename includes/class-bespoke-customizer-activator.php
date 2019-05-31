@@ -72,6 +72,16 @@ class Bespoke_Customizer_Activator {
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		dbDelta( $sql );
 
+		$table_name = $wpdb->prefix . "bespoke_customizer_mapping"; 
+		$sql = "CREATE TABLE IF NOT EXISTS $table_name (
+			`id` int(11) NOT NULL AUTO_INCREMENT,
+			`customizations` varchar(245) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+			`category_id` int(11) NOT NULL,
+			PRIMARY KEY (`id`)
+		  )";
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		dbDelta( $sql );
+
 	 }
 
 	 

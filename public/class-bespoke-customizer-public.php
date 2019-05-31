@@ -109,7 +109,11 @@ class Bespoke_Customizer_Public {
 			header("Content-Type: application/json; charset=UTF-8");
 			$plugin = new Bespoke_Customizer();
 			if($request === "fetchItems"){
-				$myresponse = json_encode($plugin->fetchItems());
+				$prodId = $_GET['prodId'];
+				$terms = get_the_terms ( $prodId, 'product_cat' );
+				$category_id = $terms[0]->term_id;
+				//var_dump($terms[0]);
+				$myresponse = json_encode($plugin->fetchItemByCatId($category_id));
 				http_response_code(200);
 				echo $myresponse;
 			}
@@ -133,6 +137,7 @@ class Bespoke_Customizer_Public {
 			}
 			if($request === "getProduct"){
 				$prodId = $_GET['prodId'];
+				
 				$product = $plugin->loadProduct($prodId);
 				$json_response = array();
 				$json_response['image'] = get_the_post_thumbnail_url( $product->get_id(), 'full' );

@@ -72,6 +72,9 @@ margin:0px;
 div.modal{
     overflow:scroll;
 }
+div.show{
+    display:block !important;
+}
 #parentCard{
     margin: 1em;
 }

@@ -11,6 +11,9 @@ if($_POST){
 if($item_id){
     $categories = $plugin->getCategoriesByItemId($item_id);
 }
+if($_GET['label_delete_id']){
+    $plugin->deleteLabel($_GET['label_delete_id']);
+}
 $items = $plugin->fetchItems();
 $labels = $plugin->fetchLabels();
 ?>
@@ -72,7 +75,7 @@ $labels = $plugin->fetchLabels();
                     </td>
                     <th scope="col" id="title" class="manage-column column-title column-primary sortable desc"><a href="#"><span>Title</span><span class="sorting-indicator"></span></a></th>
                     <th>Category</th>
-                    <th></th>
+                    <th></th><th></th>
                 </tr>
                 </thead>
                 <tbody id="the-list">
@@ -83,6 +86,7 @@ $labels = $plugin->fetchLabels();
                             <td>'.$label->title.'</td>
                             <td>'.$plugin->getCategoryById($label->category_id)->title.'</td>
                             <td><a href="?page=bespoke-customizer/admin/partials/labels.php&label_id='.$label->id.'">view</a></td>
+                            <td><a href="?page=bespoke-customizer/admin/partials/labels.php&label_delete_id='.$label->id.'">delete</a></td>
                         </tr>';
                     } 
                     ?>

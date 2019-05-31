@@ -104,22 +104,23 @@ class Bespoke_Customizer_Admin {
 	 * Register a custom menu page.
 	 */
 	public function register_my_menu() {
+		$url = "bespoke-customizer/admin/partials/categories-customization.php";
 		add_menu_page(
 			__( 'Bespoke Customizer', 'textdomain' ),
 			'Bespoke Customizer',
 			'manage_options',
-			'#bespoke_customizer',
+			$url ,
 			'',
-			plugins_url( 'bespoke-customizer/images/icon.png' ),
+			"",
 			6
 		);
-		add_submenu_page( '#bespoke_customizer', 'Fashion Labels', 'Fashion Labels',
+		add_submenu_page( $url , 'Fashion Labels', 'Fashion Labels',
 			'manage_options', 'bespoke-customizer/admin/partials/bespoke-customizer-admin-display.php');
 		add_submenu_page( '', 'Categories', 'Categories',
 			'manage_options', 'bespoke-customizer/admin/partials/categories.php');
-		add_submenu_page( '#bespoke_customizer', 'Items', 'Items',
+		add_submenu_page( $url , 'Items', 'Items',
 			'manage_options', 'bespoke-customizer/admin/partials/items.php');
-		add_submenu_page( '#bespoke_customizer', 'Add Labels', 'Add Labels',
+		add_submenu_page( $url , 'Add Labels', 'Add Labels',
     		'manage_options', 'bespoke-customizer/admin/partials/labels.php');
 	}
 

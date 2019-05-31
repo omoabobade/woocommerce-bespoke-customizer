@@ -224,6 +224,17 @@ class Bespoke_Customizer {
 		return $this->version;
 	}
 
+	public function fetchItemByCatId($catId){
+		global $wpdb;
+		$mapping = $wpdb->get_results( "SELECT * FROM ". $wpdb->prefix ."bespoke_customizer_mapping where category_id=".$catId);
+		$results = $wpdb->get_results( "SELECT * FROM ".$wpdb->prefix ."bespoke_customizer_items where id in (".$mapping[0]->customizations.")");
+		//var_dump($results);
+		if(!empty($results)) {
+			return $results;
+		} 
+		return [];
+	}
+
 	public function fetchItems(){
 		global $wpdb;
 		$results = $wpdb->get_results( "SELECT * FROM ".$wpdb->prefix ."bespoke_customizer_items");
@@ -254,6 +265,12 @@ class Bespoke_Customizer {
 								  '%s') // format details accordingly
 		  );
 		  return $wpdb->insert_id;
+	}
+
+	public function deleteItem($id){
+		global $wpdb;
+		$table_name = $wpdb->prefix ."bespoke_customizer_items";
+		return $wpdb->delete( $table_name, array( 'id' => $id ) );
 	}
 
 	public function getCategoryById($categoryId){
@@ -291,6 +308,32 @@ class Bespoke_Customizer {
 		  return $wpdb->insert_id;
 	}
 
+	public function saveMapping(){
+		global $wpdb;
+		$customizations = implode(',', $_POST['customizations']);
+		$category =  $_GET['category'];
+		$table_name = $wpdb->prefix ."bespoke_customizer_mapping";
+		$wpdb->delete( $table_name, array( 'category_id' => $category ) );
+		$wpdb->insert($table_name, array(
+			'category_id' => $category, 
+			'customizations' => $customizations
+			),array(
+			'%d',
+			'%s') // format details accordingly
+		);
+		return $wpdb->insert_id;
+	}
+
+	public function fetchCustomizations($catId){
+		global $wpdb;
+		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM ".$wpdb->prefix ."bespoke_customizer_mapping where category_id='%d'", $catId));
+		//var_dump($results);exit();
+		if(!empty($results)) {
+			return $results;
+		} 
+		return "";
+	}
+
 	public function getLabelByCategoryId($categoryId){
 		global $wpdb;
 		$results = $wpdb->get_results( "SELECT * FROM ".$wpdb->prefix ."bespoke_customizer_labels where category_id=".$categoryId);
@@ -307,6 +350,12 @@ class Bespoke_Customizer {
 			return $results;
 		} 	
 		return [];	
+	}
+
+	public function deleteLabel($id){
+		global $wpdb;
+		$table_name = $wpdb->prefix ."bespoke_customizer_labels";
+		return $wpdb->delete( $table_name, array( 'id' => $id ) );
 	}
 
 	public function loadProduct($productID){

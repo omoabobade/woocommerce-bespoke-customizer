@@ -29,11 +29,14 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 	$( window ).load(function() {
+		    //activeDomain = "http://localhost:8080/wordpress/";
+			activeDomain = "https://www.marcomartinez.clothing/demo/";
 		$(".customize_button").click(function(){
 			$(".modal-backdrop").show();
 			$("div#exampleModalLong").addClass('show');//.show();
 			$(".modal-backdrop").addClass('show');
-			fetch("http://localhost/wordpress/?api_request=getProduct&prodId="+$(".customize_button").attr("data-product"), {method: 'get'})
+			Cookies.set('customize_product_id', $(".customize_button").attr("data-product"));
+			fetch(activeDomain+"?api_request=getProduct&prodId="+$(".customize_button").attr("data-product"), {method: 'get'})
 			.then((response)=>{ 
 				return response.json();
 			})

@@ -6,6 +6,10 @@ if($_POST){
         echo "<h2 style='color:blue'>Item Saved</h2>";
     };
 }
+if($_GET['item_delete_id']){
+    $plugin->deleteItem($_GET['item_delete_id']);
+}
+
 $items = $plugin->fetchItems();
 ?>
 
@@ -31,6 +35,7 @@ $items = $plugin->fetchItems();
                     </td>
                     <th scope="col" id="title" class="manage-column column-title column-primary sortable desc"><a href="#"><span>Title</span><span class="sorting-indicator"></span></a></th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody id="the-list">
@@ -40,6 +45,9 @@ $items = $plugin->fetchItems();
                             <th><input id="cb-select-all-1" type="checkbox"></th>
                             <td>'.$item->title.'</td>
                             <td><a href="?page=bespoke-customizer/admin/partials/categories.php&item_id='.$item->id.'">view</a></td>
+                            <td>
+                            <a href="?page=bespoke-customizer/admin/partials/items.php&item_delete_id='.$item->id.'">delete</a>
+                            </td>
                         </tr>';
                     } 
                     ?>
